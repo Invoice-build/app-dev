@@ -1,0 +1,59 @@
+version: "3.7"
+
+volumes:
+  db:
+  
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./api/tmp/db:/var/lib/postgresql/data
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    restart: always
+    volumes:
+      - ./api:/app
+    ports:
+      - 5000:3000
+    depends_on: 
+      - db
+    environment: 
+      ETHERSCAN_API_KEY:
+      INFURA_PROJECT_ID:
+      INFURA_PROJECT_SECRET:
+      JWT_SECRET:
+      REDIS_URL: redis://redis:6379/0
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile.dev
+    restart: always
+    command: yarn run dev
+    volumes: 
+      - ./front:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    environment: 
+      APP_ENV: development
+      API_URL: http://localhost:5000
+      FATHOM_SITE_ID: XXX
+  eth_utils_app:
+    build:
+      context: ./eth-utils-app
+      dockerfile: Dockerfile.dev
+    restart: always
+    command: yarn run start
+    volumes: 
+      - ./eth-utils-app:/app
+      - /app/node_modules
+    ports:
+      - 3001:3000
+    
