@@ -45,14 +45,14 @@ services:
       APP_ENV: development
       API_URL: http://localhost:5000
       FATHOM_SITE_ID: XXX
-  eth_utils_app:
+  eth_utils_api:
     build:
-      context: ./eth-utils-app
+      context: ./eth-utils-api
       dockerfile: Dockerfile.dev
     restart: always
     command: yarn run start
     volumes: 
-      - ./eth-utils-app:/app
+      - ./eth-utils-api:/app
       - /app/node_modules
     ports:
       - 3001:3000
