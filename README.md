@@ -14,6 +14,7 @@ git submodule init && git submodule update
 
 Set up the api database and seed it with the supported tokens.
 ```bash
+docker-compose run -d db
 docker-compose run api rails db:setup
 ```
 
