@@ -31,4 +31,4 @@ Spin up the app.
 docker-compose up
 ```
 
-Once all the services are finished building open [http://localhost:3000](http://localhost:3000) in you browser.
+Once all the services are finished building, open [http://localhost:3000](http://localhost:3000) in your browser.
