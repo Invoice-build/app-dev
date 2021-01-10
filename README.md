@@ -14,8 +14,7 @@ git submodule init && git submodule update
 
 Set up the api database and seed it with the supported tokens.
 ```bash
-docker-compose run -d db
-docker-compose run api rails db:setup
+docker-compose build && docker-compose run api rails db:setup
 ```
 
 Add your own environment credentials to the api service. To do this run the following to create and open the development credentials file in vim:
