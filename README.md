@@ -19,7 +19,7 @@ docker-compose build && docker-compose run api rails db:setup
 
 Add your own environment credentials to the api service. To do this run the following to create and open the development credentials file in vim:
 ```bash
-docker-compose run api rake creds:prod
+docker-compose run api rake creds:dev
 ```
 
 Then paste the follow in the file and add your credentials:
