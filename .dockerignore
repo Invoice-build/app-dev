@@ -1,0 +1,7 @@
+.git
+.nuxt
+.DS_Store
+Dockerfile*
+node_modules
+
+secrets.yml

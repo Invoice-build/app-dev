@@ -1,0 +1,61 @@
+version: "3.7"
+
+volumes:
+  db:
+  
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./api/tmp/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    restart: always
+    volumes:
+      - ./api:/app
+    ports:
+      - 5000:3000
+    depends_on: 
+      db:
+        condition: service_healthy
+    environment: 
+      REDIS_URL: redis://redis:6379/0
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+    restart: always
+    command: yarn run dev
+    volumes: 
+      - ./web:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    environment: 
+      APP_ENV: development
+      API_URL: http://localhost:5000
+      INFURA_PROJECT_ID: xxx
+      FATHOM_SITE_ID: XXX
+  eth-utils-api:
+    build:
+      context: ./eth-utils-api
+      dockerfile: Dockerfile.dev
+    restart: always
+    command: yarn run start
+    volumes: 
+      - ./eth-utils-api:/app
+      - /app/node_modules
+    ports:
+      - 3001:3000

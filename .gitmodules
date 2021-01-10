@@ -1,0 +1,12 @@
+[submodule "api"]
+	path = api
+	url = https://github.com/Invoice-build/app-api.git
+[submodule "front"]
+	path = front
+	url = https://github.com/Invoice-build/app-front.git
+[submodule "eth-utils-api"]
+	path = eth-utils-api
+	url = https://github.com/Invoice-build/eth-utils-api.git
+[submodule "web"]
+	path = web
+	url = https://github.com/Invoice-build/app-web.git
