@@ -48,6 +48,21 @@ services:
       API_URL: http://localhost:5000
       INFURA_PROJECT_ID: xxx
       FATHOM_SITE_ID: XXX
+      NETWORK: localhost
+  hardhat:
+    build:
+      context: ./hardhat
+      dockerfile: Dockerfile.dev
+    restart: always
+    command: yarn run dev
+    volumes: 
+      - ./hardhat:/app
+      - /app/node_modules
+      - ./web/contracts:/app/deployments
+    ports:
+      - 8545:8545
+    env_file:
+      - ./hardhat/.env
   eth-utils-api:
     build:
       context: ./eth-utils-api
