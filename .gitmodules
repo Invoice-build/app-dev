@@ -10,3 +10,6 @@
 [submodule "web"]
 	path = web
 	url = https://github.com/Invoice-build/app-web.git
+[submodule "hardhat"]
+	path = hardhat
+	url = https://github.com/Invoice-build/hardhat.git
