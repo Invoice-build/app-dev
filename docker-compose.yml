@@ -46,7 +46,7 @@ services:
     environment:
       APP_ENV: development
       API_URL: http://localhost:5000
-      INFURA_PROJECT_ID: a279b87cf2a34e16be196b16b992ffae
+      INFURA_PROJECT_ID: xxx
       FATHOM_SITE_ID: XXX
       CHAIN_ID: '31337'
   eth-utils-api:
