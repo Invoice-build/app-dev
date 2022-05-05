@@ -1,8 +1,8 @@
-version: "3.7"
+version: '3.7'
 
 volumes:
   db:
-  
+
 services:
   db:
     image: postgres
@@ -13,7 +13,7 @@ services:
     volumes:
       - ./api/tmp/db:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -27,10 +27,10 @@ services:
       - ./api:/app
     ports:
       - 5000:3000
-    depends_on: 
+    depends_on:
       db:
         condition: service_healthy
-    environment: 
+    environment:
       REDIS_URL: redis://redis:6379/0
   web:
     build:
@@ -38,38 +38,24 @@ services:
       dockerfile: Dockerfile.dev
     restart: always
     command: yarn run dev
-    volumes: 
+    volumes:
       - ./web:/app
       - /app/node_modules
     ports:
       - 3000:3000
-    environment: 
+    environment:
       APP_ENV: development
       API_URL: http://localhost:5000
-      INFURA_PROJECT_ID: xxx
+      INFURA_PROJECT_ID: a279b87cf2a34e16be196b16b992ffae
       FATHOM_SITE_ID: XXX
       CHAIN_ID: '31337'
-  hardhat:
-    build:
-      context: ./hardhat
-      dockerfile: Dockerfile.dev
-    restart: always
-    command: yarn run dev
-    volumes: 
-      - ./hardhat:/app
-      - /app/node_modules
-      - ./web/contracts:/app/tmp/contracts
-    ports:
-      - 8545:8545
-    env_file:
-      - ./hardhat/.env
   eth-utils-api:
     build:
       context: ./eth-utils-api
       dockerfile: Dockerfile.dev
     restart: always
     command: yarn run start
-    volumes: 
+    volumes:
       - ./eth-utils-api:/app
       - /app/node_modules
     ports:
